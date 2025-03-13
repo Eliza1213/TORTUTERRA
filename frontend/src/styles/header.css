@@ -1,0 +1,105 @@
+/* Estilos del encabezado */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #4CAF50;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: sans-serif;
+  padding: 1rem;
+  font-size: 32px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap; /* Permite que los elementos se acomoden mejor en pantallas pequeñas */
+}
+
+/* Título del encabezado */
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+  flex-grow: 1; /* Permite que el título se adapte */
+  text-align: left;
+}
+
+/* Contenido del encabezado */
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Barra de búsqueda */
+.search-bar {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 200px;
+}
+
+/* Contenedor de los enlaces */
+.session-links {
+  display: flex; /* Alinea los enlaces horizontalmente */
+  justify-content: flex-end; /* Alinea los enlaces hacia la derecha */
+  margin-right: 40px; /* Da un margen al contenedor desde el borde derecho */
+}
+
+/* Estilos para los enlaces individuales */
+.session-links a {
+  color: white;
+  margin-left: 15px; /* Espaciado entre los enlaces */
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 5px 10px; /* Espacio adicional interno */
+  border-radius: 5px; /* Bordes redondeados para un diseño más atractivo */
+  transition: background-color 0.3s; /* Efecto suave al pasar el mouse */
+}
+
+.session-links a:hover {
+  text-decoration: underline;
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo al pasar el mouse */
+}
+
+
+/* Ajuste para que el contenido no quede cubierto por el encabezado */
+body {
+  margin-top: 80px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* --------------------- */
+/* Diseño responsivo para móviles */
+/* --------------------- */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.8rem;
+  }
+
+  .header h1 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .search-bar {
+    width: 90%; /* Se adapta al ancho del contenedor */
+    max-width: 300px;
+  }
+
+  .session-links a {
+    display: block;
+    margin: 5px 0;
+  }
+}

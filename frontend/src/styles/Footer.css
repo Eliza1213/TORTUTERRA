@@ -1,0 +1,20 @@
+.footer {
+  position: fixed; /* Fija el footer en la parte inferior */
+  bottom: 0; /* Alineado al borde inferior */
+  left: 0;
+  width: 100%; /* Ocupa todo el ancho */
+  background-color: #4CAF50;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px 0;
+  font: Sans-serif ;
+  font-size: 0.9rem ;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Asegura que quede por encima de otros elementos */
+}
+
+/* Ajuste del contenido para que no quede cubierto */
+body {
+  margin-top: 80px; /* Espacio para el header */
+  padding-bottom: 60px; /* Espacio para el footer */
+}

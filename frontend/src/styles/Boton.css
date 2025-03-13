@@ -1,0 +1,16 @@
+
+.registro-btn {
+    background-color: #2a7f68;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 0.75rem ;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .registro-btn:hover {
+    background-color: #4caf92;
+  }

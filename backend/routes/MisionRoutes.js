@@ -6,7 +6,7 @@ const router = express.Router();
 // Crear nueva misión
 router.post("/", async (req, res) => {
   try {
-    const { titulo, descripcion } = req.body;
+    const { titulo, descripcion, } = req.body;
 
     if (!titulo || !descripcion) {
       return res.status(400).json({ error: "Todos los campos son obligatorios" });
@@ -79,6 +79,21 @@ router.delete("/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al eliminar misión" });
+  }
+});
+
+
+// Leer la misión más reciente (para la parte pública)
+router.get("/publica", async (req, res) => {
+  try {
+    const mision = await Mision.findOne().sort({ fechaCreacion: -1 });
+    if (!mision) {
+      return res.status(404).json({ error: "No se encontró ninguna misión" });
+    }
+    res.status(200).json(mision);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener la misión pública" });
   }
 });
 

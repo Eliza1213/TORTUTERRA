@@ -31,7 +31,6 @@ const ListarMisiones = () => {
       }
     }
   };
-
   return (
     <div className="misiones-container">
       <h2>Misiones</h2>
@@ -39,7 +38,6 @@ const ListarMisiones = () => {
         <thead>
           <tr>
             <th>Título</th>
-            <th>Descripción</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -47,7 +45,6 @@ const ListarMisiones = () => {
           {misiones.map((mision) => (
             <tr key={mision._id}>
               <td>{mision.titulo}</td>
-              <td>{mision.descripcion}</td>
               <td>
                 <Link to={`/misionesAdmin/actualizar/${mision._id}`} className="btn">
                   Actualizar

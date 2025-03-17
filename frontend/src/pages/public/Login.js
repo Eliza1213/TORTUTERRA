@@ -1,65 +1,54 @@
 import React, { useState } from "react";
-import '../../styles/Login.css'
-import Boton from "../../components/Boton";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-  const [formData, setFormData] = useState({ usuario: "", password: "" });
-  const [error, setError] = useState("");
+const Login = () => {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí podrías manejar el envío del formulario
-    if (!formData.usuario || !formData.password) {
-      setError("Por favor completa todos los campos.");
-    } else {
-      setError("");
-      alert("Inicio de sesión exitoso");
+
+    try {
+      const response = await fetch("http://localhost:4000/api/usuarios/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("usuarioActual", JSON.stringify(data.usuario)); // Guardar usuario en LocalStorage
+
+        alert("Inicio de sesión exitoso");
+
+        // Redirigir según el rol del usuario
+        if (data.usuario.rol === "administrador") {
+          navigate("/misionesAdmin/listar");
+        } else {
+          navigate("/VisionesVisualizar/listar");
+        }
+      } else {
+        const errorData = await response.json();
+        alert(errorData.error || "Error al iniciar sesión");
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      alert("Hubo un problema al iniciar sesión");
     }
   };
 
   return (
-    <div className="login-container">
-      <div>
+    <form onSubmit={handleSubmit}>
       <h2>Inicio de Sesión</h2>
-      {error && <p className="error">{error}</p>}
-
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="usuario">Usuario:</label>
-          <input
-            type="text"
-            id="usuario"
-            name="usuario"
-            className="input"
-            placeholder="Ingresa tu usuario"
-            value={formData.usuario}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="password">Contraseña:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="input"
-            placeholder="Ingresa tu contraseña"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <Boton type="submit">Iniciar Sesión</Boton>
-      </form>
-      </div>
-    </div>
+      <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+      <input type="password" name="password" placeholder="Contraseña" value={formData.password} onChange={handleChange} required />
+      <button type="submit">Iniciar Sesión</button>
+    </form>
   );
-}
+};
 
 export default Login;

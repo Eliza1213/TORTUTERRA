@@ -60,25 +60,24 @@ const ListarPreguntas = () => {
           </tr>
         </thead>
         <tbody>
-          {preguntas.map((pregunta) => (
-            <tr key={pregunta._id}>
-              {/* Muestra valores por defecto si los campos están vacíos */}
-              <td>{pregunta.titulo || "Sin título"}</td>
-              <td>{pregunta.descripcion || "Sin descripción"}</td>
-              <td>
-                <Link to={`/preguntasAdmin/actualizar/${pregunta._id}`} className="btn">
-                  Actualizar
-                </Link>
-                <button
-                  onClick={() => handleEliminar(pregunta._id)}
-                  className="btn"
-                >
-                  Eliminar
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        {preguntas.map((pregunta) => (
+          <tr key={pregunta._id}>
+            <td>{pregunta.pregunta || "Sin título"}</td>
+            <td>{pregunta.respuesta || "Sin descripción"}</td>
+            <td>
+              <Link to={`/preguntasAdmin/actualizar/${pregunta._id}`} className="btn">
+                Actualizar
+              </Link>
+              <button
+                onClick={() => handleEliminar(pregunta._id)}
+                className="btn"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
       </table>
     </div>
   );

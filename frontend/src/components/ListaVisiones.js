@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css"; // Importar Bootstrap
 
 const ListarVisiones = () => {
   const [visiones, setVisiones] = useState([]);
@@ -33,10 +34,13 @@ const ListarVisiones = () => {
   };
 
   return (
-    <div className="visiones-container">
-      <h2>Visiones</h2>
-      <table>
-        <thead>
+    <div className="container mt-5">
+      {/* Encabezado */}
+      <h2 className="text-center text-success mb-4">Visiones</h2>
+      
+      {/* Tabla de visiones */}
+      <table className="table table-bordered table-hover text-center">
+        <thead className="table-success">
           <tr>
             <th>Título</th>
             <th>Descripción</th>
@@ -44,23 +48,34 @@ const ListarVisiones = () => {
           </tr>
         </thead>
         <tbody>
-          {visiones.map((vision) => (
-            <tr key={vision._id}>
-              <td>{vision.titulo}</td>
-              <td>{vision.descripcion}</td>
-              <td>
-                <Link to={`/visionesAdmin/actualizar/${vision._id}`} className="btn">
-                  Actualizar
-                </Link>
-                <button
-                  onClick={() => handleEliminar(vision._id)}
-                  className="btn"
-                >
-                  Eliminar
-                </button>
+          {visiones.length > 0 ? (
+            visiones.map((vision) => (
+              <tr key={vision._id}>
+                <td>{vision.titulo}</td>
+                <td>{vision.descripcion}</td>
+                <td>
+                  <Link 
+                    to={`/visionesAdmin/actualizar/${vision._id}`} 
+                    className="btn btn-warning btn-sm me-2"
+                  >
+                    Actualizar
+                  </Link>
+                  <button
+                    onClick={() => handleEliminar(vision._id)}
+                    className="btn btn-danger btn-sm"
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3" className="text-muted">
+                No hay visiones disponibles.
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

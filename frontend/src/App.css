@@ -1,29 +1,26 @@
-/* Navegación fija */
 .nav {
   position: fixed;
-  top: 0; /* Anclado a la parte superior */
-  left: 0;
-  width: 100%; /* Abarca todo el ancho */
-  height: 60px; /* Ajusta la altura según sea necesario */
-  background-color: #2a7f68; /* Color del menú */
-  z-index: 9999; /* Encima de todo */
+  top: 0;
+  left: 0; /* Fijado al lado izquierdo */
+  width: 250px; /* Ancho del recuadro */
+  height: 100%; /* Altura completa de la pantalla */
+  background-color: #2a7f68; /* Fondo del recuadro */
+  z-index: 9999;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  flex-direction: column; /* Disposición vertical */
+  justify-content: flex-start; /* Comienza desde arriba */
+  padding-top: 20px;
+  border-right: 2px solid #ffffff; /* Borde derecho blanco para delimitar */
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
 }
 
-/* Alinear los elementos del menú */
 .nav ul {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 15px; /* Espaciado interno a los lados */
   display: flex;
-  gap: 20px; /* Espaciado entre enlaces */
-}
-
-.nav ul li {
-  padding: 0;
+  flex-direction: column; /* Elementos en vertical */
+  gap: 15px; /* Espaciado entre enlaces */
 }
 
 .nav ul li a {
@@ -31,26 +28,37 @@
   text-decoration: none;
   font-size: 16px;
   font-weight: bold;
+  padding: 10px 15px; /* Espaciado interno */
+  background-color: transparent; /* Fondo transparente */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: all 0.3s ease; /* Animación suave */
 }
 
 .nav ul li a:hover {
-  color: #4CAF50;
-  text-decoration: underline;
+  background-color: #4CAF50; /* Fondo verde al pasar el cursor */
+  color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al hover */
 }
 
-/* Margen superior para el contenido principal */
+/* Margen para el contenido principal */
 body {
   margin: 0;
-  padding: 0;
+  font-family: 'Arial', sans-serif; /* Fuente estándar */
+  background-color: #f4f4f9; /* Fondo claro */
+  color: #333;
+  padding-left: 250px; /* Margen izquierdo para dejar espacio al menú */
 }
 
 main {
-  margin-top: 60px; /* Ajusta al valor de la altura de .nav */
+  padding: 20px; /* Espaciado alrededor del contenido principal */
 }
 
-/* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
-  .nav ul {
-    flex-direction: column;
+  .nav {
+    width: 200px; /* Ajusta el ancho en pantallas pequeñas */
+  }
+
+  body {
+    padding-left: 200px; /* Ajusta el margen del contenido */
   }
 }

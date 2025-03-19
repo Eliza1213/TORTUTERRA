@@ -55,7 +55,6 @@ const ListarPreguntas = () => {
         <thead>
           <tr>
             <th>Título</th>
-            <th>Descripción</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -63,7 +62,6 @@ const ListarPreguntas = () => {
         {preguntas.map((pregunta) => (
           <tr key={pregunta._id}>
             <td>{pregunta.pregunta || "Sin título"}</td>
-            <td>{pregunta.respuesta || "Sin descripción"}</td>
             <td>
               <Link to={`/preguntasAdmin/actualizar/${pregunta._id}`} className="btn">
                 Actualizar

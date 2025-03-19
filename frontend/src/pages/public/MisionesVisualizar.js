@@ -13,7 +13,7 @@ const MisionesVisualizar = () => {
   
     return (
       <div className="visiones-container">
-        <h2 className="visiones-title">Lista de Misiones</h2>
+        <h2 className="visiones-title">Nuestra Misión</h2>
         {misiones.length === 0 ? (
           <p>No hay Misiones disponibles</p>
         ) : (

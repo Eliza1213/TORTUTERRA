@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const ListaProductos = () => {
+const ListarProductos = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
@@ -40,7 +40,6 @@ const ListaProductos = () => {
           <tr>
             <th>Nombre</th>
             <th>Precio</th>
-            <th>Stock</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -49,12 +48,8 @@ const ListaProductos = () => {
             <tr key={producto._id}>
               <td>{producto.nombre}</td>
               <td>${producto.precio.toFixed(2)}</td>
-              <td>{producto.stock}</td>
               <td>
-                <Link
-                  to={`/productosAdmin/actualizar/${producto._id}`}
-                  className="btn"
-                >
+                <Link to={`/productosAdmin/actualizar/${producto._id}`} className="btn">
                   Actualizar
                 </Link>
                 <button
@@ -72,4 +67,4 @@ const ListaProductos = () => {
   );
 };
 
-export default ListaProductos;
+export default ListarProductos;

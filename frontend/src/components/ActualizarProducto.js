@@ -8,7 +8,7 @@ const ActualizarProducto = () => {
   const [descripcion, setDescripcion] = useState("");
   const [precio, setPrecio] = useState("");
   const [stock, setStock] = useState("");
-  const [imagenes, setImagenes] = useState("");
+  const [imagenes, setImagenes] = useState([]);
 
   useEffect(() => {
     const fetchProducto = async () => {
@@ -20,7 +20,7 @@ const ActualizarProducto = () => {
         setDescripcion(data.descripcion);
         setPrecio(data.precio);
         setStock(data.stock);
-        setImagenes(data.imagenes.join(", ")); // Convierte el array en una cadena separada por comas
+        setImagenes(data.imagenes);
       } catch (error) {
         console.error(error);
       }
@@ -29,15 +29,30 @@ const ActualizarProducto = () => {
     fetchProducto();
   }, [id]);
 
+  const handleImagenChange = (index, value) => {
+    const nuevasImagenes = [...imagenes];
+    nuevasImagenes[index] = value;
+    setImagenes(nuevasImagenes);
+  };
+
+  const handleAgregarImagen = () => {
+    setImagenes([...imagenes, ""]);
+  };
+
+  const handleEliminarImagen = (index) => {
+    const nuevasImagenes = imagenes.filter((_, i) => i !== index);
+    setImagenes(nuevasImagenes);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedProducto = {
-      nombre,
-      descripcion,
-      precio: parseFloat(precio),
-      stock: parseInt(stock, 10),
-      imagenes: imagenes.split(",").map((img) => img.trim()), // Convierte la cadena de vuelta a un array
+    const updatedProducto = { 
+      nombre, 
+      descripcion, 
+      precio: parseFloat(precio), 
+      stock: parseInt(stock), 
+      imagenes 
     };
 
     try {
@@ -49,7 +64,7 @@ const ActualizarProducto = () => {
 
       if (response.ok) {
         alert("Producto actualizado con éxito");
-        navigate("/productosAdmin/listar"); // Redirige a la lista de productos
+        navigate("/admin/productos/listar"); // Redirige a la lista de productos
       } else {
         alert("Error al actualizar producto");
       }
@@ -64,13 +79,13 @@ const ActualizarProducto = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Nombre del producto"
+          placeholder="Nombre"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           required
         />
         <textarea
-          placeholder="Descripción del producto"
+          placeholder="Descripción"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
           required
@@ -89,13 +104,24 @@ const ActualizarProducto = () => {
           onChange={(e) => setStock(e.target.value)}
           required
         />
-        <input
-          type="text"
-          placeholder="Imágenes (separadas por comas)"
-          value={imagenes}
-          onChange={(e) => setImagenes(e.target.value)}
-          required
-        />
+        <h4>Imágenes</h4>
+        {imagenes.map((imagen, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              placeholder={`URL de la imagen ${index + 1}`}
+              value={imagen}
+              onChange={(e) => handleImagenChange(index, e.target.value)}
+              required
+            />
+            <button type="button" onClick={() => handleEliminarImagen(index)}>
+              Eliminar
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={handleAgregarImagen}>
+          Agregar Imagen
+        </button>
         <button type="submit">Actualizar Producto</button>
       </form>
     </div>

@@ -2,15 +2,23 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importar Bootstrap
 import MisionesAdmin from "./pages/admin/MisionesAdmin";
 import VisionesAdmin from "./pages/admin/VisionesAdmin";
+import TerminosAdmin from "./pages/admin/TerminosAdmin";
 import PreguntasAdmin from "./pages/admin/PreguntasAdmin";
 import PoliticasAdmin from "./pages/admin/PoliticasAdmin";
-import TerminosAdmin from "./pages/admin/TerminosAdmin";
 import ProductosAdmin from "./pages/admin/ProductosAdmin";
+import ContactosAdmin from "./pages/admin/ContactosAdmin";
+import InformacionAdmin from "./pages/admin/InformacionAdmin";
 import VisionesVisualizar from "./pages/public/VisionesVisualizar";
 import MisionesVisualizar from "./pages/public/MisionesVisualizar";
+import TerminosVisualizar from "./pages/public/TerminosVisualizar";
 import PreguntasVisualizar from "./pages/public/PreguntasVisualizar";
-import Login from "./pages/public/Login";
-import Registro from "./pages/public/Registro";
+import PoliticasVisualizar from "./pages/public/PoliticasVisualizar";
+import ProductosVisualizar from "./pages/public/ProductosVisualizar";
+import InformacionVisualizar from "./pages/public/InformacionVisualizar";
+import ContactoVisualizar from "./pages/public/ContactoVisualizar";
+
+
+
 
 function App() {
   return (
@@ -34,6 +42,9 @@ function App() {
           >
              {/* Paginas de Administrador */}
             <ul className="nav flex-column">
+            <li className="nav-item mb-3">
+                <Link className="nav-link text-white" to="/contactosAdmin/listar">Administrar Contactos</Link>
+              </li>
               <li className="nav-item mb-3">
                 <Link className="nav-link text-white" to="/misionesAdmin/listar">Administrar Misión</Link>
               </li>
@@ -52,8 +63,16 @@ function App() {
               <li className="nav-item mb-3">
                 <Link className="nav-link text-white" to="/ProductosAdmin/listar">Administrar Productos</Link>
               </li>
+              <li className="nav-item mb-3">
+                <Link className="nav-link text-white" to="/InformacionAdmin/listar">Administrar Infromación sobre Tortuga</Link>
+              </li>
+              
+
 
                 {/* Paginas de Publicas */}
+              <li className="nav-item mb-3">
+                <Link className="nav-link text-white" to="/ContactoVisualizar/listar">Ver Contactos</Link>
+              </li>
               <li className="nav-item mb-3">
                 <Link className="nav-link text-white" to="/VisionesVisualizar/listar">Ver Visiones</Link>
               </li>
@@ -61,15 +80,22 @@ function App() {
                 <Link className="nav-link text-white" to="/MisionesVisualizar/listar">Ver Misiones</Link>
               </li>
               <li className="nav-item mb-3">
+                <Link className="nav-link text-white" to="/InformacionVisualizar/listar">Ver Información sobre Tortugas</Link>
+              </li>
+              <li className="nav-item mb-3">
+                <Link className="nav-link text-white" to="/ProductosVisualizar/listar">Ver Productos</Link>
+              </li>
+              <li className="nav-item mb-3">
                 <Link className="nav-link text-white" to="/PreguntasVisualizar/listar">Ver Preguntas</Link>
               </li>
               <li className="nav-item mb-3">
-                <Link className="nav-link text-white" to="/Login">Iniciar Sesión</Link>
-              </li>
+                <Link className="nav-link text-white" to="/PoliticasVisualizar/listar">Ver Politicas</Link>
+              </li>             
               <li className="nav-item mb-3">
-                <Link className="nav-link text-white" to="/Registro">Registrar</Link>
+                <Link className="nav-link text-white" to="/TerminosVisualizar/listar">Ver Términos</Link>
               </li>
-
+            
+             
 
             </ul>
           </nav>
@@ -77,28 +103,34 @@ function App() {
           {/* Contenido Administrativo */}
           <main className="flex-grow-1 p-4">
             <Routes>
+              <Route path="/contactosAdmin/*" element={<ContactosAdmin />} />
               <Route path="/preguntasAdmin/*" element={<PreguntasAdmin />} />
               <Route path="/misionesAdmin/*" element={<MisionesAdmin />} />
               <Route path="/visionesAdmin/*" element={<VisionesAdmin />} />
               <Route path="/politicasAdmin/*" element={<PoliticasAdmin />} />
               <Route path="/terminosAdmin/*" element={<TerminosAdmin />} />
               <Route path="/productosAdmin/*" element={<ProductosAdmin />} />
+              <Route path="/informacionAdmin/*" element={<InformacionAdmin />} />
+
 
             {/* Contenido Publica */}
               <Route path="/VisionesVisualizar/*" element={<VisionesVisualizar />} />
               <Route path="/MisionesVisualizar/*" element={<MisionesVisualizar />} />
               <Route path="/PreguntasVisualizar/*" element={<PreguntasVisualizar />} />
-              <Route path="/Login" element={<Login />} />
-              <Route path="/Registro" element={<Registro />} />
+              <Route path="/PoliticasVisualizar/*" element={<PoliticasVisualizar />} />
+              <Route path="/TerminosVisualizar/*" element={<TerminosVisualizar />} />
+              <Route path="/ProductosVisualizar/*" element={<ProductosVisualizar />} />
+              <Route path="/InformacionVisualizar/*" element={<InformacionVisualizar />} />
+              <Route path="/ContactoVisualizar/*" element={<ContactoVisualizar />} />
 
             </Routes>
           </main>
         </div>
 
-        {/* Footer */}
+        {/* Footer 
         <footer className="bg-success text-white text-center py-3">
           <p>Bienvenido a la parte administrativa | Todos los derechos reservados ©</p>
-        </footer>
+        </footer>*/}
       </div>
     </Router>
   );

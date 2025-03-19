@@ -13,7 +13,7 @@ const VisionesVisualizar = () => {
   
     return (
       <div className="visiones-container">
-        <h2 className="visiones-title">Lista de Visiones</h2>
+        <h2 className="visiones-title">Nuestra Visión</h2>
         {visiones.length === 0 ? (
           <p>No hay visiones disponibles</p>
         ) : (

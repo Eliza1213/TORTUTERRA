@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css"; // Importar Bootstrap
 
 const ListarVisiones = () => {
   const [visiones, setVisiones] = useState([]);
@@ -34,16 +33,15 @@ const ListarVisiones = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="misiones-container">
       {/* Encabezado */}
-      <h2 className="text-center text-success mb-4">Visiones</h2>
+      <h2 >Visiones</h2>
       
       {/* Tabla de visiones */}
-      <table className="table table-bordered table-hover text-center">
-        <thead className="table-success">
+      <table>
+        <thead >
           <tr>
             <th>Título</th>
-            <th>Descripción</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -52,17 +50,14 @@ const ListarVisiones = () => {
             visiones.map((vision) => (
               <tr key={vision._id}>
                 <td>{vision.titulo}</td>
-                <td>{vision.descripcion}</td>
                 <td>
                   <Link 
                     to={`/visionesAdmin/actualizar/${vision._id}`} 
-                    className="btn btn-warning btn-sm me-2"
                   >
                     Actualizar
                   </Link>
                   <button
                     onClick={() => handleEliminar(vision._id)}
-                    className="btn btn-danger btn-sm"
                   >
                     Eliminar
                   </button>
@@ -71,7 +66,7 @@ const ListarVisiones = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="3" className="text-muted">
+              <td>
                 No hay visiones disponibles.
               </td>
             </tr>

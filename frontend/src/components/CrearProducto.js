@@ -5,22 +5,25 @@ const CrearProducto = () => {
   const [descripcion, setDescripcion] = useState("");
   const [precio, setPrecio] = useState("");
   const [stock, setStock] = useState("");
-  const [imagen, setImagen] = useState(null); // Aquí se almacena el archivo de imagen
+  const [imagenes, setImagenes] = useState([""]); // Por defecto, un array vacío para imágenes
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Crear el FormData para enviar el archivo y otros datos
-    const formData = new FormData();
-    formData.append("nombre", nombre);
-    formData.append("descripcion", descripcion);
-    formData.append("precio", parseFloat(precio));
-    formData.append("stock", parseInt(stock, 10));
-    formData.append("imagen", imagen); // Agregamos la imagen al FormData
+    const newProducto = { 
+      nombre, 
+      descripcion, 
+      precio: parseFloat(precio), 
+      stock: parseInt(stock), 
+      imagenes 
+    };
 
     const response = await fetch("http://localhost:4000/api/productos", {
       method: "POST",
-      body: formData, // Enviamos el FormData
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newProducto),
     });
 
     if (response.ok) {
@@ -30,19 +33,29 @@ const CrearProducto = () => {
     }
   };
 
+  const handleAgregarImagen = () => {
+    setImagenes([...imagenes, ""]); // Agrega un nuevo campo de imagen vacío
+  };
+
+  const handleImagenChange = (index, value) => {
+    const nuevasImagenes = [...imagenes];
+    nuevasImagenes[index] = value;
+    setImagenes(nuevasImagenes);
+  };
+
   return (
     <div className="productos-container">
       <h2>Crear Producto</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Nombre del producto"
+          placeholder="Nombre"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           required
         />
         <textarea
-          placeholder="Descripción del producto"
+          placeholder="Descripción"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
           required
@@ -61,11 +74,20 @@ const CrearProducto = () => {
           onChange={(e) => setStock(e.target.value)}
           required
         />
-        <input
-          type="file"
-          onChange={(e) => setImagen(e.target.files[0])} // Cargamos la imagen seleccionada
-          required
-        />
+        <h4>Imágenes</h4>
+        {imagenes.map((imagen, index) => (
+          <input
+            key={index}
+            type="text"
+            placeholder={`URL de la imagen ${index + 1}`}
+            value={imagen}
+            onChange={(e) => handleImagenChange(index, e.target.value)}
+            required
+          />
+        ))}
+        <button type="button" onClick={handleAgregarImagen}>
+          Agregar Imagen
+        </button>
         <button type="submit">Crear Producto</button>
       </form>
     </div>

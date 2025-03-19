@@ -1,4 +1,4 @@
-import '../../styles/Productos.css'; // Cambia la hoja de estilos si tienes una específica para productos
+import '../../styles/Misiones.css';
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import CrearProducto from "../../components/CrearProducto";

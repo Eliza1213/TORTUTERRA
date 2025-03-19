@@ -17,13 +17,16 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Sirve a
 connectDB();
 
 // Definir rutas
-app.use("/api/usuarios", require("./routes/UsuarioRoutes"));
-app.use("/api/misiones", require("./routes/MisionRoutes")); // Rutas de Misión
-app.use("/api/visiones", require("./routes/VisionRoutes")); // Rutas de Visión
+
+app.use("/api/misiones", require("./routes/MisionRoutes"));
+app.use("/api/misiones", require("./routes/MisionRoutes"));  
+app.use("/api/visiones", require("./routes/VisionRoutes")); 
 app.use("/api/preguntas", require("./routes/PreguntaRoutes"));
 app.use("/api/politicas", require ("./routes/PoliticaRoutes"));
 app.use("/api/terminos", require ("./routes/TerminoRoutes"));
-app.use("/api/productos", require("./routes/ProductRoutes"));
+app.use("/api/productos", require("./routes/ProductoRoutes"));
+app.use("/api/informaciones", require("./routes/InformacionRoutes"));
+app.use("/api/contactos", require("./routes/ContactoRoutes"));
 
 app.listen(port, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${port}`);

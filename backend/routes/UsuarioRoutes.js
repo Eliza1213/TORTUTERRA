@@ -1,25 +1,28 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const Usuario = require("../models/Usuario");
-
+const bcrypt = require("bcryptjs");
 const router = express.Router();
 
-// Registro de usuario
-router.post("/registro", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const { nombre, ap, am, username, email, password, telefono, preguntaSecreta, respuestaSecreta } = req.body;
+    const {
+      nombre,
+      ap,
+      am,
+      username,
+      email,
+      password,
+      telefono,
+      preguntaSecreta,
+      respuestaSecreta,
+    } = req.body;
 
-    // Verificar si el email ya está registrado
-    const usuarioExistente = await Usuario.findOne({ email });
-    if (usuarioExistente) {
-      return res.status(400).json({ error: "El correo ya está registrado" });
+    if (!nombre || !ap || !am || !username || !email || !password || !telefono || !preguntaSecreta || !respuestaSecreta) {
+      return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
 
-    // Hashear la contraseña antes de guardarla
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Crear un nuevo usuario con el rol "usuario"
     const nuevoUsuario = new Usuario({
       nombre,
       ap,
@@ -30,46 +33,39 @@ router.post("/registro", async (req, res) => {
       telefono,
       preguntaSecreta,
       respuestaSecreta,
+      rol: "usuario",
     });
 
     await nuevoUsuario.save();
-    res.status(201).json({ mensaje: "Usuario registrado con éxito" });
+    res.status(201).json({ mensaje: "Usuario registrado con éxito", usuario: nuevoUsuario });
   } catch (error) {
-    console.error("Error al registrar usuario:", error.message);
+    console.error(error);
     res.status(500).json({ error: "Error al registrar usuario" });
   }
 });
+// a partir de aqui es del inicio de sesion
+const jwt = require("jsonwebtoken");
 
-// Login de usuario
 router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body;
-
-    // Buscar usuario por correo
     const usuario = await Usuario.findOne({ email });
-    if (!usuario) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
-    }
+    if (!usuario) return res.status(400).json({ error: "Usuario no encontrado" });
 
-    // Comparar contraseña
-    const esPasswordCorrecto = await bcrypt.compare(password, usuario.password);
-    if (!esPasswordCorrecto) {
-      return res.status(401).json({ error: "Contraseña incorrecta" });
-    }
+    const esValida = await bcrypt.compare(password, usuario.password);
+    if (!esValida) return res.status(400).json({ error: "Contraseña incorrecta" });
 
-    // Generar token JWT
-    const token = jwt.sign({ id: usuario._id, rol: usuario.rol }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { id: usuario._id, rol: usuario.rol },
+      "secreto",
+      { expiresIn: "1h" }
+    );
 
-    res.status(200).json({
-      mensaje: "Inicio de sesión exitoso",
-      usuario: { id: usuario._id, nombre: usuario.nombre, rol: usuario.rol },
-      token,
-    });
+    res.json({ token, rol: usuario.rol });
+    res.json({ token, rol: usuario.rol, nombre: usuario.nombre });
   } catch (error) {
-    console.error("Error al iniciar sesión:", error.message);
-    res.status(500).json({ error: "Error al iniciar sesión" });
+    res.status(500).json({ error: "Error en el servidor" });
   }
 });
 
